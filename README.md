@@ -25,7 +25,7 @@ There are two parts
 ## Scalability :
 These two codes are built with high scalability, for e.g. if we need script to process more types of data (e.g. Bronze, along with Gold + Silver) we need to make very few updates in the code to support that requirement. 
 
-fetchHtml.py - Fill details for new element (e.g. Bronze), website to track, table id etc.
+fetchHtml.py - Paper Work !!
 ```
 self_obj["silver", "web"]   = "https://www.investing.com/commodities/silver-historical-data"
 self_obj["silver", "date"]  = "//div[@id=\"results_box\"]/table[@id=\"curr_table\"]/tbody/tr/td[1]/text()"
@@ -44,21 +44,23 @@ cur.execute(query)
 
 fetchHtml.py  - Enable parse website analyze new web data
 ```
-# Parse Website Gold website
 parse_websites("gold")
 ```
 
 getCommodityPrice.py
 ```
-Ready already !!
-
+Ready !!
 ```
 
-## Built With 
+## Prerequisites 
 - MySQLdb
 - lxml
 - requests
 - Python 2.7
+- MySQLdb goldSilverPrices setup
 
 ## Author
 * **Ramkumar Subramanian** - *Initial work* - [rsubramanian@scu.edu]
+
+## Acknowledgments
+I would like to Thank Mr. Peter Walther (VP, Big Data Federation, Inc) for being inspiration behind this project.
