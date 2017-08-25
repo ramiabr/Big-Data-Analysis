@@ -1,8 +1,8 @@
 # Web Data Analysis 
 The Goal of this project is to Extract Financial data (Gold and Silver Prices) from website (investing.com) and Build a MySQL database in local server, then code will perform various data analysis like compute Mean, Variance on the Dataset.   
 
-## Architecture of Solution
-This project contains two parts 
+## Architecture
+There are two parts 
 
 1.) Extract Data from Website (fetchHtml.py) 
 
@@ -10,11 +10,11 @@ This project contains two parts
     
 ## fetchHtml.py     
 - This program Extracts Gold and Silver Prices from investing.com website 
-- As First Step the program builds MySQL database "goldSilverPrices" 
+- It also builds MySQL database "goldSilverPrices" in local server 
 - MySQL database will have two tables gold and silver which will store 
   corresponding Price Data from website 
-- The website will be parsed using Xpath module
-- Parsed information is stored in database 
+- Website will be parsed using Xpath module
+- Parsed information is stored in MySQL database 
 
 ## getCommodityPrice.py
 - This program will read My SQL Database for gold and silver tables
@@ -23,7 +23,7 @@ This project contains two parts
 - Print the output <Metal type> <Mean> <Variance>
 
 ## Scalability :
-These two codes are built with high scalability as framework, for e.g. if we need the script to work on more types of data (e.g. Bronze, along with Gold + Silver) we need to make very few updates in the code to support that requirement. 
+These two codes are built with high scalability, for e.g. if we need script to process more types of data (e.g. Bronze, along with Gold + Silver) we need to make very few updates in the code to support that requirement. 
 
 fetchHtml.py - Fill details for new element (e.g. Bronze), website to track, table id etc.
 ```
@@ -50,7 +50,7 @@ parse_websites("gold")
 
 getCommodityPrice.py
 ```
-Does not need any modifications and Ready already  
+Ready already !!
 
 ```
 
