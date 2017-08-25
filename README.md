@@ -58,9 +58,3 @@ Ready !!
 - requests
 - Python 2.7
 - MySQLdb "goldSilverPrices" db setup
-
-## Author
-* **Ramkumar Subramanian** - *Initial work* - [rsubramanian@scu.edu]
-
-## Acknowledgments
-I would like to Thank **Mr. Peter Walther** (VP, Big Data Federation, Inc) for being inspiration behind this project.
