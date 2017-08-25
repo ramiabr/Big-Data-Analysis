@@ -1,55 +1,63 @@
 # Web Data Analysis 
 The Goal of this project is to Extract Financial data (Gold and Silver Prices) from website (investing.com) and Build a MySQL database in local server, then code will perform various data analysis like compute Mean, Variance on the Dataset.   
 
-## Architecture
-There are two parts 
+## Running Steps
+### Program 1:
+#### Tables in MySQLdb are first empty    
+The script expects to have a Database with the Tables. Attaching the goldSilverPrices.sql file for reference.  
 
-1.) Extract Data from Website (fetchHtml.py) 
-
-2.) Perform Data Analysis on MySQL db (getCommodityPrice.py)
-    
-## fetchHtml.py     
-- This program Extracts Gold and Silver Prices from investing.com website 
-- It also builds MySQL database "goldSilverPrices" in local server 
-- MySQL database will have two tables gold and silver which will store 
-  corresponding Price Data from website 
-- Website will be parsed using Xpath module
-- Parsed information is stored in MySQL database 
-
-## getCommodityPrice.py
-- This program will read My SQL Database for gold and silver tables
-- Compute Mean (x1 + x2 + x3 +  ... + xn)/n 
-- Variance (1/(n-1)) * ( (x1-M)^2 + (x2-M)^2 + ..... + (Xn-M)^2 )
-- Print the output <Metal type> <Mean> <Variance>
-
-## Scalability :
-These two codes are built with high scalability, for e.g. if we need script to process more types of data (e.g. Bronze, along with Gold + Silver) we need to make very few updates in the code to support that requirement. 
-
-fetchHtml.py - Paper Work !!
 ```
-self_obj["silver", "web"]   = "https://www.investing.com/commodities/silver-historical-data"
-self_obj["silver", "date"]  = "//div[@id=\"results_box\"]/table[@id=\"curr_table\"]/tbody/tr/td[1]/text()"
-self_obj["silver", "price"] = "//div[@id=\"results_box\"]/table[@id=\"curr_table\"]/tbody/tr/td[2]/text()"
+mysql> SELECT * from gold;
+Empty set (0.00 sec)
+
+mysql> SELECT * from silver;
+Empty set (0.00 sec)
 ```
 
-fetchHtml.py - Create new DB Table 
+#### Running fetchHtml.py script : Populating the DB  
 ```
-query = "drop table if exists silver"
-cur.execute(query)
-...
-...
-query = "CREATE TABLE silver(date DATE, price VARCHAR(20))"
-cur.execute(query)
+ram@ubuntu:~/BigData$ ./fetchHtml.py
+INFO: Parsing HTML :  https://www.investing.com/commodities/gold-historical-data
+INFO: Parsing HTML :  https://www.investing.com/commodities/silver-historical-data
+
+INFO: Flow completed successfully !!
 ```
 
-fetchHtml.py  - Enable parse website analyze new web data
+#### Now checking the populated MySQLdb 
 ```
-parse_websites("gold")
+mysql> SELECT * from gold;
++------------+----------+
+| date       | price    |
++------------+----------+
+| 2017-08-25 | 1,292.14 |
+| 2017-08-24 | 1,291.93 |
+  ..........   ........
+  ..........   ........
+| 2017-07-26 | 1,255.60 |
+| 2017-07-25 | 1,258.50 |
++------------+----------+
+
+mysql> SELECT * from silver;
++------------+--------+
+| date       | price  |
++------------+--------+
+| 2017-08-25 | 16.965 |
+| 2017-08-24 | 16.940 |
+  ..........   ........
+  ..........   ........
+| 2017-07-26 | 16.459 |
+| 2017-07-25 | 16.542 |
++------------+--------+
 ```
 
-getCommodityPrice.py
+### Program 2:
+#### Mean and variance of the commodity’s price over the specified date range
 ```
-Ready !!
+ram@ubuntu:~/BigData$ ./getCommodityPrice.py  2017-07-25 2017-08-25 gold
+gold 1280.01 161.87 
+
+ram@ubuntu:~/BigData$ ./getCommodityPrice.py  2017-07-25 2017-08-25 silver
+silver 16.78 0.07 
 ```
 
 ## Prerequisites 
