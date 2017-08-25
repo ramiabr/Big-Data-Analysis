@@ -63,4 +63,4 @@ Ready !!
 * **Ramkumar Subramanian** - *Initial work* - [rsubramanian@scu.edu]
 
 ## Acknowledgments
-I would like to Thank Mr. Peter Walther (VP, Big Data Federation, Inc) for being inspiration behind this project.
+I would like to Thank **Mr. Peter Walther** (VP, Big Data Federation, Inc) for being inspiration behind this project.
