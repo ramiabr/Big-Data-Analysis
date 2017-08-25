@@ -1,12 +1,30 @@
 #!/usr/bin/python
+#
+# Description:  - This program will read My SQL Database for gold and silver tables
+#		- Compute Mean (x1 + x2 + x3 +  ... + xn)/n 
+#		- Variance (1/(n-1)) * ( (x1-M)^2 + (x2-M)^2 + ..... + (Xn-M)^2 )
+#		- Print the output <Metal type> <Mean> <Variance>
+#
+# Inputs     :  <Start Date> <End Date> <Metal Type>
+# Outputs    :  <Metal Type> <Mean> <Variance>
+# 
+# Dependancies:  This code requires below modules to be installed and available
+#		 - MySQLdb
+#		 - Python 2.7
+#
+# Note: This code has been tested in Python 2.7
+
 import sys, getopt
 import os
 import re
 import sys
+from datetime import datetime
 
+## Print module to display formatted result
 def printf(format, *args):
     sys.stdout.write(format % args)
-   
+
+# Import MySQLdb 
 try:
   import MySQLdb
 except:
@@ -19,19 +37,24 @@ global cur
 global date 
 date = {}
 
-
+## Open Database 
 def openDB():
   global db
   global cur
-  
-  db = MySQLdb.connect(host="localhost",  # your host 
-     user="root",	   # username
-     passwd="scu@123",     # password
-     db="goldSilverPrices")   # name of the database
+
+  try:
+    db = MySQLdb.connect(host="localhost",  # your host 
+       user="root",	   # username
+       passwd="scu@123",     # password
+       db="goldSilverPrices")   # name of the database
+  except:
+    print "ERROR: Unable to open MySQLdb \"goldSilverPrices\" "
+    sys.exit(0)
  
   # Create a Cursor object to execute queries.
   cur = db.cursor()
 
+# Close db
 def closeDB():
   global db
   global cur
@@ -39,10 +62,21 @@ def closeDB():
   db.close()
 
 
+############################################
+##### Main Function ########################
+############################################
 def main():  
+  # Parse Input options
   parse_options()
+  
+  # Data Analytics on DB
   dataAnalytics()
 
+############################################################
+## Description  : Read Database, Compute Mean, Variance		  
+## Input	: Start Date, End Date, Metal Type
+## Output	: Mean and Variance
+############################################################
 def dataAnalytics():
   global date
   global cur
@@ -124,9 +158,8 @@ def parse_options():
   ## Ensure Inputs are in acceptable format
   pattern = re.search('(\d\d\d\d)-(\d+)-(\d+)', sys.argv[1], re.IGNORECASE)
   if(pattern):
-    year, month, day = sanityCheckDate(pattern, sys.argv[1])
-    date["start"] =  year + "-" + month + "-" + day 
-    #print date["start"], "\n"
+    s_year, s_month, s_day = sanityCheckDate(pattern, sys.argv[1])
+    date["start"] =  s_year + "-" + s_month + "-" + s_day 
   else:
     print "ERROR: Expected Start Date format \"YYYY-MM-DD\" but given with ", sys.argv[1]
     usage()
@@ -135,9 +168,8 @@ def parse_options():
   ## Ensure Inputs are in acceptable format
   pattern = re.search('(\d\d\d\d)-(\d+)-(\d+)', sys.argv[2], re.IGNORECASE)
   if(pattern):
-    year, month, day = sanityCheckDate(pattern, sys.argv[2])
-    date["end"] =  year + "-" + month + "-" + day 
-    #print date["end"], "\n"
+    e_year, e_month, e_day = sanityCheckDate(pattern, sys.argv[2])
+    date["end"] =  e_year + "-" + e_month + "-" + e_day 
   else:
     print "ERROR: Expected End Date format \"YYYY-MM-DD\" but given with ", sys.argv[2]
     usage()
@@ -150,8 +182,17 @@ def parse_options():
     print "ERROR: Expected \"gold\" (or) \"silver\" keyword but given with, \"", sys.argv[3], "\""
     usage()
   
-  print "\nINFO: Performing Data Analysis "
-  print "Start Date: ", date["start"] ,", End Date: ", date["end"], ", Analysis Type: ", date["dtype"]
+  ## Make sure Start Time is lesser than End Time
+  diff = datetime(int(e_year), int(e_month), int(e_day)) < datetime(int(s_year), int(s_month), int(s_day))
+  
+  if diff:
+    print "ERROR: End Date Should be > Start Date \n\nStart Date: ", date["start"] , ", End Date: ", date["end"]
+    sys.exit(0)
+  
+  #print "\nINFO: Performing Data Analysis "
+  #print "Start Date: ", date["start"] ,", End Date: ", date["end"], ", Analysis Type: ", date["dtype"]
+  
+  
 
 
 ## Print Usage information to user and exit 
