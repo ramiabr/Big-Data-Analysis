@@ -57,7 +57,7 @@ Ready !!
 - lxml
 - requests
 - Python 2.7
-- MySQLdb goldSilverPrices setup
+- MySQLdb "goldSilverPrices" db setup
 
 ## Author
 * **Ramkumar Subramanian** - *Initial work* - [rsubramanian@scu.edu]
