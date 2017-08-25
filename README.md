@@ -20,13 +20,35 @@ This project contains two parts
 - Variance (1/(n-1)) * ( (x1-M)^2 + (x2-M)^2 + ..... + (Xn-M)^2 )
 - Print the output <Metal type> <Mean> <Variance>
 
-## Some Standout Features:
+## Scalability :
 These two codes are built with high scalability as foundation, for e.g. if we need the script to track more types of data (e.g. Bronze, along with Gold and Silver) we need to make very few updates in the code to support that request. 
 
+fetchHtml.py - Fill up details for new element (e.g. Bronze)
 ```
 self_obj["silver", "web"]   = "https://www.investing.com/commodities/silver-historical-data"
 self_obj["silver", "date"]  = "//div[@id=\"results_box\"]/table[@id=\"curr_table\"]/tbody/tr/td[1]/text()"
 self_obj["silver", "price"] = "//div[@id=\"results_box\"]/table[@id=\"curr_table\"]/tbody/tr/td[2]/text()"
 ```
 
+fetchHtml.py - Create new DB Table 
+```
+query = "drop table if exists silver"
+cur.execute(query)
+...
+...
+query = "CREATE TABLE silver(date DATE, price VARCHAR(20))"
+cur.execute(query)
+```
+
+fetchHtml.py  - Enable parse website analyze new web data
+```
+# Parse Website Gold website
+parse_websites("gold")
+```
+
+getCommodityPrice.py
+```
+Does not need any modifications and Ready already  
+
+```
 
