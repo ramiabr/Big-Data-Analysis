@@ -1,10 +1,12 @@
 # Web Data Analysis 
-The Goal of this project is to Extract Financial data (Gold and Silver Prices) from website and Build a MySQL database in local server, then we various analysis like compute Mean, Variance on the Dataset.   
+The Goal of this project is to Extract Financial data (Gold and Silver Prices) from website (investing.com) and Build a MySQL database in local server, then code will perform various data analysis like compute Mean, Variance on the Dataset.   
 
 ## Architecture of Solution
 This project contains two parts 
-    1.) Extract Data from Website (fetchHtml.py) 
-    2.) Perform Data Analysis on MySQL db (getCommodityPrice.py)
+
+1.) Extract Data from Website (fetchHtml.py) 
+
+2.) Perform Data Analysis on MySQL db (getCommodityPrice.py)
     
 ## fetchHtml.py     
 - This program Extracts Gold and Silver Prices from investing.com website 
@@ -12,7 +14,7 @@ This project contains two parts
 - MySQL database will have two tables gold and silver which will store 
   corresponding Price Data from website 
 - The website will be parsed using Xpath module
-- Parsed information is updated into database 
+- Parsed information is stored in database 
 
 ## getCommodityPrice.py
 - This program will read My SQL Database for gold and silver tables
@@ -21,9 +23,9 @@ This project contains two parts
 - Print the output <Metal type> <Mean> <Variance>
 
 ## Scalability :
-These two codes are built with high scalability as foundation, for e.g. if we need the script to track more types of data (e.g. Bronze, along with Gold and Silver) we need to make very few updates in the code to support that request. 
+These two codes are built with high scalability as framework, for e.g. if we need the script to work on more types of data (e.g. Bronze, along with Gold + Silver) we need to make very few updates in the code to support that requirement. 
 
-fetchHtml.py - Fill up details for new element (e.g. Bronze)
+fetchHtml.py - Fill details for new element (e.g. Bronze), website to track, table id etc.
 ```
 self_obj["silver", "web"]   = "https://www.investing.com/commodities/silver-historical-data"
 self_obj["silver", "date"]  = "//div[@id=\"results_box\"]/table[@id=\"curr_table\"]/tbody/tr/td[1]/text()"
@@ -52,3 +54,11 @@ Does not need any modifications and Ready already
 
 ```
 
+## Built With 
+- MySQLdb
+- lxml
+- requests
+- Python 2.7
+
+## Author
+* **Ramkumar Subramanian** - *Initial work* - [rsubramanian@scu.edu]
